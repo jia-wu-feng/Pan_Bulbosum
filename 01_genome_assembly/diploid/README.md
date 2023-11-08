@@ -9,7 +9,7 @@ Code for Article "A haplotype-resolved pangenome of the barley wild relative Hor
 #### Genome size evaluation 
 
 ````shell
-zcat ../hifi_reads/\*.fastq.gz | jellyfish count /dev/fd/0 -C -o FB20_005_1_k71 -m 71 -t 20 -s 5G
+zcat ../hifi_reads/*.fastq.gz | jellyfish count /dev/fd/0 -C -o FB20_005_1_k71 -m 71 -t 20 -s 5G
 
 jellyfish histo -h 3000000 -o FB_19_028_3_k71.histo FB20_005_1_k71
 ````
@@ -24,7 +24,7 @@ findGSE(histo="FB20_005_1_k71.histo", sizek=71, outdir="FB20_005_1_he_k71", exp_
 
 #### Assembly using HiFiasm
 
-Hifiasm.zsh
+Step1.1_Hifiasm.zsh
 
 Convert gfa to fasta and calculate N50
 
@@ -40,61 +40,66 @@ samtools faidx FB20_005_1_hifiasm.p_utg.fasta
 
 #### Align Hi-C data to assembled unitigs
 
-Hi-C_map.zsh
+Step1.2_Hi-C_map.zsh
 
 #### Use the barley high-confidence gene as the maker to build a guide map
 
-Guide_map.zsh
+Step1.3_Guide_map.zsh
 
 #### create assembly object 
 
-Create_assembly_object.R
+Step1.4_Create_assembly_object.R
 
 
 ### Step 2
 
-Phasing.R
+Step2_Phasing.R
 
 ### Step 3
 
-Output_assembly.R
+Step3_Output_assembly.R
 
-Output unassembled sequence
+#### Output unassembled sequence
 
 ````R
+s
 source('/filer-dg/agruppen/seq_shared/mascher/code_repositories/triticeae.bitbucket.io/R/pseudomolecule_construction.R')
 
-readRDS('FB20_005_1_hic_map_v2_hap1.Rds') -> hic_map_v2_hap1
-readRDS('FB20_005_1_hic_map_v2_hap2.Rds') -> hic_map_v2_hap2
-
+readRDS('A40_hifiasm_map_v2_hap1.Rds') -> hic_map_v2_hap1
+readRDS('A40_hifiasm_map_v2_hap2.Rds') -> hic_map_v2_hap2
+readRDS('A40_hifiasm_map_v2_hap3.Rds') -> hic_map_v2_hap3
+readRDS('A40_hifiasm_map_v2_hap4.Rds') -> hic_map_v2_hap4
 
 
 hic_map_v2_hap1$agp[!is.na(chr)]$scaffold->h1
 hic_map_v2_hap2$agp[!is.na(chr)]$scaffold->h2
+hic_map_v2_hap3$agp[!is.na(chr)]$scaffold->h3
+hic_map_v2_hap4$agp[!is.na(chr)]$scaffold->h4
 
 
 hic_map_v2_hap1$agp[,.(scaffold,scaffold_length)][scaffold!="gap"] -> chrh
 
 chrh[,hap:=0]
-chrh[scaffold %in% h1, hap:=hap+10]
-chrh[scaffold %in% h2, hap:=hap+2]
+chrh[scaffold %in% h1, hap:=hap+1000]
+chrh[scaffold %in% h2, hap:=hap+200]
+chrh[scaffold %in% h3, hap:=hap+30]
+chrh[scaffold %in% h4, hap:=hap+4]
 
-
-write.table(chrh,"FB20_005_1_contig_all.txt",quote=F,row.names=F,sep="\t")
+write.table(chrh,"A40_contig_all.txt",quote=F,row.names=F,sep="\t")
 
 sum(hic_map_v2_hap1$agp[!is.na(chr)]$scaffold_length)
 sum(hic_map_v2_hap2$agp[!is.na(chr)]$scaffold_length)
-
+sum(hic_map_v2_hap3$agp[!is.na(chr)]$scaffold_length)
+sum(hic_map_v2_hap4$agp[!is.na(chr)]$scaffold_length)
 
 sum(chrh[hap==0]$scaffold_length)
 
+
 ````
 
-
 ````shell
-less FB20_005_1_contig_all.txt | awk '{if($3==0) print $1}' > uncontig
+less A40_contig_all.txt | awk '{if($3==0) print $1}' > uncontig
 
-seqkit grep -f uncontig FB20_005_1_pseudomolecules_v2_hap1/*_assembly_v2.fasta > FB20_005_1_unanchor.fasta
-
+seqkit grep -f uncontig ../A40_pseudomolecules_v2_hap1/230326_assembly_v2.fasta > A40_unanchor.fasta
 
 ````

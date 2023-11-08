@@ -1,0 +1,8 @@
+chr	path
+chr1H	/filer-dg/agruppen/dg2/fengj/hbulbosum_genome/IntroBlocker/vcf2/chr1H.vcf.gz
+chr2H	/filer-dg/agruppen/dg2/fengj/hbulbosum_genome/IntroBlocker/vcf2/chr2H.vcf.gz
+chr3H	/filer-dg/agruppen/dg2/fengj/hbulbosum_genome/IntroBlocker/vcf2/chr3H.vcf.gz
+chr4H	/filer-dg/agruppen/dg2/fengj/hbulbosum_genome/IntroBlocker/vcf2/chr4H.vcf.gz
+chr5H	/filer-dg/agruppen/dg2/fengj/hbulbosum_genome/IntroBlocker/vcf2/chr5H.vcf.gz
+chr6H	/filer-dg/agruppen/dg2/fengj/hbulbosum_genome/IntroBlocker/vcf2/chr6H.vcf.gz
+chr7H	/filer-dg/agruppen/dg2/fengj/hbulbosum_genome/IntroBlocker/vcf2/chr7H.vcf.gz
