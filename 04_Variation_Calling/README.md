@@ -2,7 +2,7 @@
 
 Code for Article "A haplotype-resolved pangenome of the barley wild relative Hordeum bulbosum"
 
-## Simulate long reads from haplotype-resolved genomes and call variants in each haplotype.
+## Simulate long reads from haplotype-resolved genomes and call variants in each haplotype
 
 ````shell
 
@@ -57,7 +57,7 @@ cd /filer-dg/agruppen/dg7/fengj/hbulbosum_genome/final_genome/sim_long_reads
 done
 ````
 
-## Merging and filtering variants.
+## Merging and filtering variants
 
 ````shell
 
